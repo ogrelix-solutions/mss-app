@@ -23,7 +23,7 @@ const ServiceType = ({ name, options }) => {
   }, []);
 
   return (
-    <div className="relative w-full inline-block text-left" ref={dropdownRef}>
+    <div className=" w-full inline-block text-left" ref={dropdownRef}>
       <div>
         <button
           type="button"
@@ -77,7 +77,7 @@ const ServiceType = ({ name, options }) => {
 const EntryForm= () => {
   return (
     <>
-  {/* This is an example component */}
+
   <div className="max-w-2xl mx-auto bg-white p-16">
     <form>
       <div className="grid gap-6 mb-6 lg:grid-cols-2">
@@ -262,7 +262,7 @@ const EntryForm= () => {
                 rows={5}
                 cols=""
                 placeholder="Eg:Core i5 2nd / 8GB / 500GB Hard Disk)Model No.: Dell Latitude E6520"
-                className="w-full  border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
+                className="w-full text-sm  border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
                 defaultValue={""}
                 />
                  </div>
@@ -274,8 +274,9 @@ const EntryForm= () => {
                 rows={5}
                 cols=""
                 placeholder="Eg:Board Dead, No Display"
-                className="w-full  border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
-                defaultValue={""}
+                className="w-full text-sm border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
+       
+                placeholderStyle={{ fontSize: '10px' }}
                 />
 
         </div>
@@ -299,7 +300,7 @@ const EntryForm= () => {
             id="remember"
             type="checkbox"
             defaultValue=""
-            className="w-4 h-4 border border-gray-300 rounded  focus:ring-3 focus:ring-blue-300  dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+            className="w-4 text-sm h-4 border border-gray-300 rounded  focus:ring-3 focus:ring-blue-300  dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
 
           />
         </div>
