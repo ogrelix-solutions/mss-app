@@ -255,7 +255,17 @@ const EntryForm= () => {
       <div className='mb-6'>
       <ServiceType name={"Service Type"} options={["It"]}/>
       </div>
-
+                 <div> 
+                 <label className='mb-2 block'>Configuration and Accessories</label>
+            <textarea
+                name="message"
+                rows={5}
+                cols=""
+                placeholder="Eg:Core i5 2nd / 8GB / 500GB Hard Disk)Model No.: Dell Latitude E6520"
+                className="w-full  border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
+                defaultValue={""}
+                />
+                 </div>
       <div>
         <div>
             <label className='mb-2 block'>Problem Report and Status</label>
@@ -263,14 +273,26 @@ const EntryForm= () => {
                 name="message"
                 rows={5}
                 cols=""
-                placeholder="Write Problem Statements here"
+                placeholder="Eg:Board Dead, No Display"
                 className="w-full  border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
                 defaultValue={""}
                 />
 
         </div>
       </div>
-
+      <div className="mb-4">
+        <label
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+        >
+        Product S.No:
+        </label>
+        <input
+          type="Text"
+          id="email"
+          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Eg:CNV720NQX"
+        />
+      </div>
       <div className="flex items-start mb-6">
         <div className="flex items-center h-5">
           <input
