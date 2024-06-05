@@ -1,10 +1,17 @@
 import React from 'react'
 import EntryForm from './Components/EntryForm'
+import SideBar from './Components/SideBar'
 
 function Home() {
   return (
     <>
-    <EntryForm />
+    <div className='flex'>
+    <SideBar/>
+    <section className='w-full ml-[3%]'>
+    <EntryForm/>
+
+    </section>
+    </div>
     </>
   )
 }
