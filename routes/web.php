@@ -8,3 +8,9 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Home');
 });
+
+
+
+Route::get('/home', function () {
+    return Inertia::render('Gta');
+});
