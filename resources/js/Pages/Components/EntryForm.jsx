@@ -93,7 +93,7 @@ const EntryForm= () => {
             id="first_name"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="John"
-            required=""
+
           />
         </div>
         <div>
@@ -108,7 +108,7 @@ const EntryForm= () => {
             id="last_name"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Doe"
-            required=""
+
           />
         </div>
         <div>
@@ -120,11 +120,11 @@ const EntryForm= () => {
           </label>
           <input
             type="tel"
-            id="phone"
+            id="phnumber"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="123-45-678"
             pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-            required=""
+
           />
         </div>
         <div>
@@ -135,11 +135,11 @@ const EntryForm= () => {
             WhatsApp Number
           </label>
           <input
-            type="url"
-            id="website"
+            type="tel"
+            id="wanumber"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="flowbite.com"
-            required=""
+            placeholder="1234567890"
+
           />
         </div>
 
@@ -152,11 +152,11 @@ const EntryForm= () => {
             Email
           </label>
           <input
-            type="url"
-            id="website"
+            type="email"
+            id="email"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="flowbite.com"
-            required=""
+            placeholder="abc@gmail.com"
+
           />
         </div>
       <div className="mb-6">
@@ -167,11 +167,11 @@ const EntryForm= () => {
           Street address
         </label>
         <input
-          type="email"
-          id="email"
+          type="text"
+          id="streetadd"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="john.doe@company.com"
-          required=""
+          placeholder="street address"
+
         />
       </div>
       <div className="mb-6">
@@ -182,11 +182,11 @@ const EntryForm= () => {
           Address Line 2
         </label>
         <input
-          type="email"
-          id="email"
+          type="text"
+          id="addline2"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="john.doe@company.com"
-          required=""
+          placeholder="address line 2"
+
         />
       </div>
       <div className='grid gap-6 mb-6 lg:grid-cols-2'>
@@ -201,8 +201,8 @@ const EntryForm= () => {
           type="email"
           id="email"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="john.doe@company.com"
-          required=""
+          placeholder="chennai"
+
         />
       </div>
       <div className="mb-6">
@@ -213,11 +213,11 @@ const EntryForm= () => {
           State / Province / Region
         </label>
         <input
-          type="email"
-          id="email"
+          type="text"
+          id="state"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="john.doe@company.com"
-          required=""
+          placeholder="tamilnadu"
+
         />
       </div>
       <div className="mb-6">
@@ -228,11 +228,11 @@ const EntryForm= () => {
           Postal Zip Code
         </label>
         <input
-          type="email"
-          id="email"
+          type="number"
+          id="zipcode"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="john.doe@company.com"
-          required=""
+          placeholder="eg:600045"
+
         />
       </div>
       <div className="mb-4">
@@ -243,11 +243,11 @@ const EntryForm= () => {
           Country
         </label>
         <input
-          type="email"
-          id="email"
+          type="text"
+          id="country"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="john.doe@company.com"
-          required=""
+          placeholder="india"
+
         />
       </div>
 
@@ -300,7 +300,7 @@ const EntryForm= () => {
             type="checkbox"
             defaultValue=""
             className="w-4 h-4 border border-gray-300 rounded  focus:ring-3 focus:ring-blue-300  dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-            required=""
+
           />
         </div>
 
