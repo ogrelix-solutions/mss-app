@@ -170,7 +170,7 @@ const EntryForm= () => {
           type="text"
           id="streetadd"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="street address"
+          placeholder="address"
 
         />
       </div>
@@ -185,7 +185,7 @@ const EntryForm= () => {
           type="text"
           id="addline2"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="address line 2"
+          placeholder="address"
 
         />
       </div>
@@ -255,7 +255,7 @@ const EntryForm= () => {
       <div className='mb-6'>
       <ServiceType name={"Service Type"} options={["It"]}/>
       </div>
-                 <div> 
+                 <div>
                  <label className='mb-2 block'>Configuration and Accessories</label>
             <textarea
                 name="message"
