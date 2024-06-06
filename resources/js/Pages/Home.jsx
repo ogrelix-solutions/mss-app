@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import EntryForm from './Components/EntryForm'
 import JobsTable from './Components/JobsTable';
+import Info from './Components/Info';
+import BriefDiscription from './Components/BriefDiscription';
 
 
 
@@ -17,7 +19,12 @@ function Home() {
     if(CurrentComponent === 3){
       return <JobsTable />
     } 
-   
+    if(CurrentComponent === 1){
+      return <Info/>
+    }
+    if(CurrentComponent === 4){
+      return <BriefDiscription/>
+    }
      else {
       return null; 
     }
@@ -42,13 +49,13 @@ function Home() {
         <ul className="mt-6 space-y-2 tracking-wide">
           <li className="min-w-max">
             <a
-              href="#"
+              onClick={(e)=>SetCurrentComponent(1)}
               aria-label="dashboard"
               className="relative hover:bg-gradient-to-r from-sky-600 hover:text-white to-cyan-400 flex items-center space-x-4 px-4 py-3 text-gray-600"
             >
               <i class='bx bxs-dashboard text-black text-2xl hover:text-blue-400'></i>
              
-              <span className="-mr-1 font-medium">Dashboard</span>
+              <span className="-mr-1 font-medium">Info</span>
             </a>
           </li>
           <li className="min-w-max">
@@ -75,7 +82,7 @@ function Home() {
           </li>
           <li className="min-w-max">
             <a
-              href="#"
+              onClick={(e)=>SetCurrentComponent(4)}
               aria-label="dashboard"
               className="relative hover:bg-gradient-to-r from-sky-600 hover:text-white to-cyan-400 flex items-center space-x-4 px-4 py-3 text-gray-600"
             >

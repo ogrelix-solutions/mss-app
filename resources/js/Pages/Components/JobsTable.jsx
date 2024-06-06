@@ -38,63 +38,63 @@ const JobsTable = () => {
             </tr>
           </thead>
           <tbody >
-            <tr className='hover:bg-blue-100'>
-              <td className="px-5  py-5 border-b border-gray-200 bg-white text-sm">
+           <tr className='hover:bg-blue-100'>
+              <td className="px-5  py-5 border-b border-gray-200  text-sm">
                1
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">Akilesh</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">Jan 21, 2020</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">9003288844</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 Desktop
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 Finished
               </td>
             </tr>
             <tr>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 2
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">Suresh</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">Jan 01, 2020</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">9003288844</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 Desktop
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 Finished
               </td>
             </tr>
             <tr>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 3
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">Ramesh</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">Jan 10, 2020</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">9003288844</p>
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 Monitor
               </td>
-              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 Finished
               </td>
             </tr>
