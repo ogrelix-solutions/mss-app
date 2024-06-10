@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import { Radio } from "@material-tailwind/react";
+
 
 const BriefDiscription = () => {
   return (
@@ -6,7 +8,7 @@ const BriefDiscription = () => {
   {/* This is an example component */}
   <div className="min-h-screen flex items-center justify-center px-4">
   <div className="max-w-4xl  bg-white w-full rounded-lg shadow-xl">
-      
+
       <div className="p-4 border-b flex justify-between">
         <div>
           <h2 className="text-2xl ">Job Information</h2>
@@ -96,11 +98,21 @@ const BriefDiscription = () => {
           <p>-</p>
         </div>
         <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+          <p className="text-gray-600">Cash Field</p>
+          <p>
+          <div className="flex ">
+      <Radio name="type"   /><p className='ml-1 mr-3'>Yes</p>
+      <Radio name="type"   /><p className='ml-1 mr-3'>No</p>
+      <Radio name="type"  /><p className='ml-1 mr-3'>Partial</p>
+    </div>
+          </p>
+        </div>
+        <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
           <p className="text-gray-600">Remarks for MSS</p>
           <p>Done at SASI COMP</p>
         </div>
 
-        
+
         <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4">
           <p className="text-gray-600">Attachments</p>
           <div className="space-y-2">
@@ -142,7 +154,7 @@ const BriefDiscription = () => {
         </div>
       </div>
     </div>
-   
+
   </div>
 </>
 

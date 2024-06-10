@@ -81,6 +81,36 @@ const EntryForm= () => {
   <div className="max-w-2xl mx-auto bg-white p-16">
     <form>
       <div className="grid gap-6 mb-6 lg:grid-cols-2">
+      <div>
+          <label
+            htmlFor="first_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+          >
+            Customer_id
+          </label>
+          <input
+            type="text"
+            id="first_name"
+            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="CS1010"
+
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="first_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+          >
+            Customer_number
+          </label>
+          <input
+            type="text"
+            id="first_name"
+            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="1234567890"
+
+          />
+        </div>
         <div>
           <label
             htmlFor="first_name"
@@ -275,7 +305,7 @@ const EntryForm= () => {
                 cols=""
                 placeholder="Eg:Board Dead, No Display"
                 className="w-full text-sm border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
-       
+
                 placeholderStyle={{ fontSize: '10px' }}
                 />
 
@@ -321,13 +351,13 @@ const EntryForm= () => {
       </div>
 
       <button
-        
+
         type="submit"
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         Submit
       </button>
-      <a href='/home'>Click here</a>
+      
 
     </form>
 
