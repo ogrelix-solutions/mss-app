@@ -1,5 +1,5 @@
 import React from 'react';
-import { Radio } from "@material-tailwind/react";
+
 
 
 const BriefDiscription = () => {
@@ -101,9 +101,24 @@ const BriefDiscription = () => {
           <p className="text-gray-600">Cash Field</p>
           <p>
           <div className="flex ">
-      <Radio name="type"   /><p className='ml-1 mr-3'>Yes</p>
-      <Radio name="type"   /><p className='ml-1 mr-3'>No</p>
-      <Radio name="type"  /><p className='ml-1 mr-3'>Partial</p>
+      <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+  <p className="text-gray-600">Cash Field</p>
+  <div className="flex items-center space-x-4">
+    <label className="flex items-center">
+      <input type="radio" name="cashMode" value="Yes" className="form-radio" />
+      <span className="ml-2">Yes</span>
+    </label>
+    <label className="flex items-center">
+      <input type="radio" name="cashMode" value="No" className="form-radio" />
+      <span className="ml-2">No</span>
+    </label>
+    <label className="flex items-center">
+      <input type="radio" name="cashMode" value="Partial" className="form-radio" />
+      <span className="ml-2">Partial</span>
+    </label>
+  </div>
+</div>
+
     </div>
           </p>
         </div>
