@@ -9,7 +9,7 @@ const JobsTable = () => {
       <h2 className="text-gray-600 font-semibold">Jobs List</h2>
       <span className="text-xs ml-1">All jobs</span>
     </div>
-    
+
   </div>
   <div>
     <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -25,6 +25,9 @@ const JobsTable = () => {
               </th>
               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Given Date
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Due Date
               </th>
               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Contact
@@ -49,6 +52,9 @@ const JobsTable = () => {
                 <p className="text-gray-900 whitespace-no-wrap">Jan 21, 2020</p>
               </td>
               <td className="px-5 py-5 border-b border-gray-200  text-sm">
+                <p className="text-gray-900 whitespace-no-wrap">March 7, 2020</p>
+              </td>
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">9003288844</p>
               </td>
               <td className="px-5 py-5 border-b border-gray-200  text-sm">
@@ -67,6 +73,9 @@ const JobsTable = () => {
               </td>
               <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">Jan 01, 2020</p>
+              </td>
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
+                <p className="text-gray-900 whitespace-no-wrap">Feb 01, 2020</p>
               </td>
               <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">9003288844</p>
@@ -89,6 +98,9 @@ const JobsTable = () => {
                 <p className="text-gray-900 whitespace-no-wrap">Jan 10, 2020</p>
               </td>
               <td className="px-5 py-5 border-b border-gray-200  text-sm">
+                <p className="text-gray-900 whitespace-no-wrap">Feb 10, 2020</p>
+              </td>
+              <td className="px-5 py-5 border-b border-gray-200  text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">9003288844</p>
               </td>
               <td className="px-5 py-5 border-b border-gray-200  text-sm">
@@ -107,6 +119,9 @@ const JobsTable = () => {
               </td>
               <td className="px-5 py-5 bg-white text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">Jan 18, 2020</p>
+              </td>
+              <td className="px-5 py-5 bg-white text-sm">
+                <p className="text-gray-900 whitespace-no-wrap">Feb 19, 2020</p>
               </td>
               <td className="px-5 py-5 bg-white text-sm">
                 <p className="text-gray-900 whitespace-no-wrap">9003288844</p>

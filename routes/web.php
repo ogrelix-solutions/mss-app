@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\jobs\JobController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +12,6 @@ Route::get('/', function () {
 
 
 
-Route::get('/home', function () {
-    return Inertia::render('Gta');
-});
+
+
+Route::post('/api/jobentry', [JobController::class, 'job_entry']);

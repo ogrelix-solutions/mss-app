@@ -1,86 +1,111 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-
-const ServiceType = ({ name, options }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  return (
-    <div className=" w-full inline-block text-left" ref={dropdownRef}>
-      <div>
-        <button
-          type="button"
-          className="inline-flex  justify-between items-center w-full  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          onClick={toggleDropdown}
-        >
-          <span>{name}</span>
-          <svg
-            className="ml-2 h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
-
-      {isOpen && (
-        <div className="origin-top-right absolute w-full right-0 mt-2  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-          <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-            {options.map((option, index) => (
-              <a
-                key={index}
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                role="menuitem"
-              >
-                {option}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-
-
+import axios from '../api/axios'
 
 
 
 
 
 const EntryForm= () => {
+
+  const[name , setname] = useState("")
+  const[firstname , setfirstname] = useState("")
+  const[lastname , setlastname] = useState("")
+  const[phnnumber , setphnnumber] = useState("")
+  const[whatsapp , setwhatsapp]  = useState("")
+  const[email , setemail] = useState("")
+  const[address,setaddress] = useState("")
+  const ServiceType = ["It service"]
+  const[stype,setstype] = useState("")
+  const[streetAdress , setstreetAdress] = useState("")
+  const[Adressline2 , setaAdressline2]  = useState("")
+  const[city , setcity] = useState("")
+  const[state,setstate] = useState("TamilNadu")
+  const[postalcode , setpostalcode] = useState("600059")
+  const[country,setCountry] = useState("India")
+  const[productreport, setproductreport] = useState("")
+  const[configuration, setconfiguration] = useState("")
+  const[serialno, setserialno] = useState("")
+
+  useEffect(() => {
+    setwhatsapp(phnnumber);
+  }, [phnnumber]);
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setname(firstname + " " + lastname)
+    setaddress(streetAdress+","+Adressline2+","+city+","+state+","+postalcode+","+country)
+    const formData = {
+      name,
+      phnnumber,
+      whatsapp,
+      email,
+      address,
+      productreport,
+      configuration,
+      serialno,
+    };
+
+    try {
+      const response = await axios.post('jobentry', formData);
+
+      if (response.status === 200) {
+        console.log('Form submitted successfully!');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
+
   return (
     <>
 
   <div className="max-w-2xl mx-auto bg-white p-16">
     <form>
+
+    <div className="grid gap-6 mb-6 lg:grid-cols-2">
+      <div>
+          <label
+            htmlFor="first_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+          >
+            Customer_id
+          </label>
+          <input
+            type="text"
+            id="first_name"
+            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="CS1010"
+
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="first_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
+          >
+            Customer_number
+          </label>
+          <input
+            type="text"
+            id="first_name"
+            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="1234567890"
+
+          />
+        </div>
+        </div>
+        <hr className='m-5'></hr>
       <div className="grid gap-6 mb-6 lg:grid-cols-2">
+      
+        
+  
+        
+        
+
         <div>
           <label
             htmlFor="first_name"
@@ -89,6 +114,8 @@ const EntryForm= () => {
             First name
           </label>
           <input
+            value={firstname}
+            onChange={(e)=>setfirstname(e.target.value)}
             type="text"
             id="first_name"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -104,6 +131,8 @@ const EntryForm= () => {
             Last name
           </label>
           <input
+          value={lastname}
+          onChange={(e)=>setlastname(e.target.value)}
             type="text"
             id="last_name"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -119,6 +148,8 @@ const EntryForm= () => {
             Phone number
           </label>
           <input
+          value={phnnumber}
+          onChange={(e)=>setphnnumber(e.target.value)}
             type="tel"
             id="phnumber"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -129,12 +160,15 @@ const EntryForm= () => {
         </div>
         <div>
           <label
+          
             htmlFor="website"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
           >
             WhatsApp Number
           </label>
           <input
+          value={whatsapp}
+          onChange={(e)=>setwhatsapp(e.target.value)}
             type="tel"
             id="wanumber"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -152,6 +186,8 @@ const EntryForm= () => {
             Email
           </label>
           <input
+          value={email}
+          onChange={(e)=>setemail(e.target.value)}
             type="email"
             id="email"
             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -167,7 +203,9 @@ const EntryForm= () => {
           Street address
         </label>
         <input
-          type="text"
+        value={streetAdress}
+        onChange={(e)=>setstreetAdress(e.target.value)}
+          type="address"
           id="streetadd"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="address"
@@ -176,13 +214,16 @@ const EntryForm= () => {
       </div>
       <div className="mb-6">
         <label
+
           htmlFor="email"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
         >
           Address Line 2
         </label>
         <input
-          type="text"
+        value={Adressline2}
+        onChange={(e)=>setaAdressline2(e.target.value)}
+          type="address"
           id="addline2"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="address"
@@ -198,8 +239,10 @@ const EntryForm= () => {
           City
         </label>
         <input
-          type="email"
-          id="email"
+          value={city}
+          onChange={(e)=>setcity(e.target.value)}
+          type="address"
+          id="city"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="chennai"
 
@@ -213,7 +256,9 @@ const EntryForm= () => {
           State / Province / Region
         </label>
         <input
-          type="text"
+        value={state}
+        onChange={(e)=>setstate(e.target.value)}
+          type="address"
           id="state"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="tamilnadu"
@@ -228,6 +273,8 @@ const EntryForm= () => {
           Postal Zip Code
         </label>
         <input
+        value={postalcode}
+        onChange={(e)=>setpostalcode(e.target.value)}
           type="number"
           id="zipcode"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -235,7 +282,7 @@ const EntryForm= () => {
 
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-6">
         <label
           htmlFor="email"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
@@ -243,21 +290,41 @@ const EntryForm= () => {
           Country
         </label>
         <input
+        value={country}
+        onChange={(e)=>setcountry(e.target.value)}
           type="text"
           id="country"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="india"
+          placeholder="eg:India"
 
         />
       </div>
+      
+      
+  
+
 
       </div>
       <div className='mb-6'>
-      <ServiceType name={"Service Type"} options={["It"]}/>
+      <select
+            value={stype}
+            onChange={(e)=>setstype(e.target.value)}
+            id="country"
+            className="border border-gray-300 mt-6 h-[50%] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          > 
+            <option  disabled selected>Service Types</option>
+            {ServiceType.map((option, index) => (
+              <option  key={index} value={option.value}>
+                {option}
+              </option>
+            ))}
+      </select>
       </div>
                  <div>
                  <label className='mb-2 block'>Configuration and Accessories</label>
             <textarea
+            value={configuration}
+            onChange={(e)=>setconfiguration(e.target.value)}
                 name="message"
                 rows={5}
                 cols=""
@@ -270,12 +337,14 @@ const EntryForm= () => {
         <div>
             <label className='mb-2 block'>Problem Report and Status</label>
             <textarea
+            value={productreport}
+            onChange={(e)=>setproductreport(e.target.value)}
                 name="message"
                 rows={5}
                 cols=""
                 placeholder="Eg:Board Dead, No Display"
                 className="w-full text-sm border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
-       
+
                 placeholderStyle={{ fontSize: '10px' }}
                 />
 
@@ -288,6 +357,8 @@ const EntryForm= () => {
         Product S.No:
         </label>
         <input
+        value={serialno}
+        onChange={(e)=>setserialno(e.target.value)}
           type="Text"
           id="email"
           className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -321,13 +392,13 @@ const EntryForm= () => {
       </div>
 
       <button
-        
+        onClick={handleSubmit}
         type="submit"
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         Submit
       </button>
-      <a href='/home'>Click here</a>
+      
 
     </form>
 
