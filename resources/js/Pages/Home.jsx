@@ -3,7 +3,7 @@ import EntryForm from './Components/EntryForm'
 import JobsTable from './Components/JobsTable';
 import Info from './Components/Info';
 import BriefDiscription from './Components/BriefDiscription';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Home() {
