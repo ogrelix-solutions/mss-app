@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('cus_id');
             $table->integer('jnumber')->unique();
-            $table->date('gdate');
+            $table->date('gdate')->nullable();
             $table->string('type');
             $table->text('jobstatus')->nullable();
             $table->date('ddate')->nullable();
-            $table->longText('psno');
+            $table->longText('psno')->nullable();
             $table->text('accon')->nullable(); //Accessories and Configuration
             $table->longText('prc');//Problem Report by the CUSTOMER
             $table->text('action_taken')->nullable(); //actiontaken
-            $table->text('return_condition'); //return condition
+            $table->text('return_condition')->nullable(); //return condition
             $table->date('delivery')->nullable(); //delivery date
             $table->integer('rough_estimate')->nullable();
             $table->integer('amount_breakup')->nullable();

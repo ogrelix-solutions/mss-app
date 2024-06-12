@@ -1,72 +1,136 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from '../api/axios';
+import { ToastContainer, toast } from 'react-toastify';
 
-import axios from '../api/axios'
+const InputField = ({max, label, value, onChange, type = "text", id, placeholder, pattern, errorMessage }) => (
+  <div className="mb-6">
+    <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">
+      {label}
+    </label>
+    <input
+      maxLength={max}
+      value={value}
+      onChange={onChange}
+      type={type}
+      id={id}
+      className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder={placeholder}
+      pattern={pattern}
+    />
+    {errorMessage && (
+      <div
+        className="flex mt-1 items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50  dark:text-red-400"
+        role="alert"
+      >
+        <svg
+          className="flex-shrink-0 inline w-4 h-4 me-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+        </svg>
+        <span className="sr-only">Info</span>
+        <div>
+          <span className="font-medium">{label} Error:</span> {errorMessage}
+        </div>
+      </div>
+    )}
+  </div>
+);
 
-
-
-
-
-const EntryForm= () => {
-
-  const[name , setname] = useState("")
-  const[firstname , setfirstname] = useState("")
-  const[lastname , setlastname] = useState("")
-  const[phnnumber , setphnnumber] = useState("")
-  const[whatsapp , setwhatsapp]  = useState("")
-  const[email , setemail] = useState("")
-  const[address,setaddress] = useState("")
+const EntryForm = () => {
+  
+  const [firstname, setfirstname] = useState("");
+  const [lastname, setlastname] = useState("");
+  const [phnnumber, setphnnumber] = useState("");
+  const [whatsapp, setwhatsapp] = useState("");
+  const [email, setemail] = useState("");
+  const [streetAdress, setstreetAdress] = useState("");
+  const [Adressline2, setaAdressline2] = useState("");
+  const [city, setcity] = useState("");
+  const [state, setstate] = useState("TamilNadu");
+  const [postalcode, setpostalcode] = useState("600059");
+  const [country, setCountry] = useState("India");
+  const [productreport, setproductreport] = useState("");
+  const [configuration, setconfiguration] = useState("");
+  const [serialno, setserialno] = useState("");
+  const [stype, setstype] = useState("");
   const ServiceType = ["It service"]
-  const[stype,setstype] = useState("")
-  const[streetAdress , setstreetAdress] = useState("")
-  const[Adressline2 , setaAdressline2]  = useState("")
-  const[city , setcity] = useState("")
-  const[state,setstate] = useState("TamilNadu")
-  const[postalcode , setpostalcode] = useState("600059")
-  const[country,setCountry] = useState("India")
-  const[productreport, setproductreport] = useState("")
-  const[configuration, setconfiguration] = useState("")
-  const[serialno, setserialno] = useState("")
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     setwhatsapp(phnnumber);
   }, [phnnumber]);
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!firstname) newErrors.firstname = "First name is required";
+    if (!lastname) newErrors.lastname = "Last name is required";
+    if (!phnnumber) newErrors.phnnumber = "Phone number is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!streetAdress) newErrors.streetAdress = "Street address is required";
+    if (!city) newErrors.city = "City is required";
+    if (!postalcode) newErrors.postalcode = "Postal code is required";
+    if (!country) newErrors.country = "Country is required";
+    return newErrors;
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setname(firstname + " " + lastname)
-    setaddress(streetAdress+","+Adressline2+","+city+","+state+","+postalcode+","+country)
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+    const name = `${firstname} ${lastname}`;
+    const address = `${streetAdress},${Adressline2},${city},${state},${postalcode},${country}`;
     const formData = {
       name,
       phnnumber,
       whatsapp,
       email,
       address,
+      stype,
       productreport,
       configuration,
       serialno,
     };
+    if(stype && productreport && configuration ){
 
-    try {
-      const response = await axios.post('jobentry', formData);
-
-      if (response.status === 200) {
-        console.log('Form submitted successfully!');
+      try {
+        const response = await axios.post('jobentry', formData);
+        if (response.status === 200) {
+          toast.success('Form submitted successfully!');
+        }
+      } catch (error) {
+        console.error('Error:', error);
       }
-    } catch (error) {
-      console.error('Error:', error);
     }
-  };
+    else{
+      if(!stype){
+        toast.error("Select Service type")
+      }
+      if(!configuration){
+        toast.error("Enter Configuration and Accessories")
+      }
+      if(!productreport){
+        toast.error("Enter Problem Statement")
+      }
+      
+    }
 
-
+    }
+  
+    
 
   return (
-    <>
-
-  <div className="max-w-2xl mx-auto bg-white p-16">
-    <form>
-
-    <div className="grid gap-6 mb-6 lg:grid-cols-2">
+    <div className="max-w-2xl mx-auto bg-white p-16">
+      <ToastContainer />
+      <form onSubmit={handleSubmit}>
+      <div className="grid gap-6 mb-6 lg:grid-cols-2">
       <div>
           <label
             htmlFor="first_name"
@@ -99,227 +163,127 @@ const EntryForm= () => {
         </div>
         </div>
         <hr className='m-5'></hr>
-      <div className="grid gap-6 mb-6 lg:grid-cols-2">
-      
-        
-  
-        
-        
-
-        <div>
-          <label
-            htmlFor="first_name"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-          >
-            First name
-          </label>
-          <input
+        <div className="grid gap-6 mb-6 lg:grid-cols-2">
+          <InputField
+            label="First name"
             value={firstname}
-            onChange={(e)=>setfirstname(e.target.value)}
-            type="text"
+            onChange={(e) => setfirstname(e.target.value)}
             id="first_name"
-            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="John"
-
+            errorMessage={errors.firstname}
           />
-        </div>
-        <div>
-          <label
-            htmlFor="last_name"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-          >
-            Last name
-          </label>
-          <input
-          value={lastname}
-          onChange={(e)=>setlastname(e.target.value)}
-            type="text"
+          <InputField
+            label="Last name"
+            value={lastname}
+            onChange={(e) => setlastname(e.target.value)}
             id="last_name"
-            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Doe"
-
+            errorMessage={errors.lastname}
           />
-        </div>
-        <div>
-          <label
-            htmlFor="phone"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-          >
-            Phone number
-          </label>
-          <input
-          value={phnnumber}
-          onChange={(e)=>setphnnumber(e.target.value)}
+          <InputField
+            max={10}
+            label="Phone number"
+            value={phnnumber}
+            onChange={(e) => setphnnumber(e.target.value)}
             type="tel"
             id="phnumber"
-            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="123-45-678"
             pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-
+            errorMessage={errors.phnnumber}
           />
-        </div>
-        <div>
-          <label
-          
-            htmlFor="website"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-          >
-            WhatsApp Number
-          </label>
-          <input
-          value={whatsapp}
-          onChange={(e)=>setwhatsapp(e.target.value)}
+          <InputField
+            label="WhatsApp Number"
+            value={whatsapp}
+            onChange={(e) => setwhatsapp(e.target.value)}
             type="tel"
             id="wanumber"
-            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="1234567890"
-
+            errorMessage={errors.whatsapp}
           />
         </div>
-
-      </div>
-      <div className='mb-6'>
-          <label
-            htmlFor="website"
-            className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-          >
-            Email
-          </label>
-          <input
-          value={email}
-          onChange={(e)=>setemail(e.target.value)}
+        <div className="mb-6">
+          <InputField
+            label="Email"
+            value={email}
+            onChange={(e) => setemail(e.target.value)}
             type="email"
             id="email"
-            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="abc@gmail.com"
-
+            errorMessage={errors.email}
           />
         </div>
-      <div className="mb-6">
-        <label
-          htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-        >
-          Street address
-        </label>
-        <input
-        value={streetAdress}
-        onChange={(e)=>setstreetAdress(e.target.value)}
-          type="address"
-          id="streetadd"
-          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="address"
-
-        />
-      </div>
-      <div className="mb-6">
-        <label
-
-          htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-        >
-          Address Line 2
-        </label>
-        <input
-        value={Adressline2}
-        onChange={(e)=>setaAdressline2(e.target.value)}
-          type="address"
-          id="addline2"
-          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="address"
-
-        />
-      </div>
-      <div className='grid gap-6 mb-6 lg:grid-cols-2'>
-      <div className="mb-6">
-        <label
-          htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-        >
-          City
-        </label>
-        <input
-          value={city}
-          onChange={(e)=>setcity(e.target.value)}
-          type="address"
-          id="city"
-          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="chennai"
-
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-        >
-          State / Province / Region
-        </label>
-        <input
-        value={state}
-        onChange={(e)=>setstate(e.target.value)}
-          type="address"
-          id="state"
-          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="tamilnadu"
-
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-        >
-          Postal Zip Code
-        </label>
-        <input
-        value={postalcode}
-        onChange={(e)=>setpostalcode(e.target.value)}
-          type="number"
-          id="zipcode"
-          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="eg:600045"
-
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="email"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900"
-        >
-          Country
-        </label>
-        <input
-        value={country}
-        onChange={(e)=>setcountry(e.target.value)}
-          type="text"
-          id="country"
-          className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="eg:India"
-
-        />
-      </div>
-      
-      
-  
-
-
-      </div>
-      <div className='mb-6'>
-      <select
-            value={stype}
-            onChange={(e)=>setstype(e.target.value)}
+        <div className="mb-6">
+          <InputField
+            label="Street address"
+            value={streetAdress}
+            onChange={(e) => setstreetAdress(e.target.value)}
+            id="streetadd"
+            placeholder="address"
+            errorMessage={errors.streetAdress}
+          />
+        </div>
+        <div className="mb-6">
+          <InputField
+            label="Address Line 2"
+            value={Adressline2}
+            onChange={(e) => setaAdressline2(e.target.value)}
+            id="addline2"
+            placeholder="address"
+          />
+        </div>
+        <div className="grid gap-6 mb-6 lg:grid-cols-2">
+          <InputField
+            label="City"
+            value={city}
+            onChange={(e) => setcity(e.target.value)}
+            id="city"
+            placeholder="chennai"
+            errorMessage={errors.city}
+          />
+          <InputField
+            label="State / Province / Region"
+            value={state}
+            onChange={(e) => setstate(e.target.value)}
+            id="state"
+            placeholder="tamilnadu"
+          />
+          <InputField
+            label="Postal Zip Code"
+            value={postalcode}
+            onChange={(e) => setpostalcode(e.target.value)}
+            type="number"
+            id="zipcode"
+            placeholder="eg:600045"
+            errorMessage={errors.postalcode}
+          />
+          <InputField
+            label="Country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
             id="country"
-            className="border border-gray-300 mt-6 h-[50%] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          > 
-            <option  disabled selected>Service Types</option>
-            {ServiceType.map((option, index) => (
-              <option  key={index} value={option.value}>
-                {option}
-              </option>
-            ))}
-      </select>
+            placeholder="eg:India"
+            errorMessage={errors.country}
+          />
+        </div>
+        <div className='mb-6'>
+        <label htmlFor="stype" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-900">
+          Service Types
+        </label>
+        <select
+          value={stype}
+          onChange={(e) => setstype(e.target.value)}
+          id="stype"
+          className="border border-gray-300 mt-6 h-[50%] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        > 
+          <option value="" disabled selected>Select a Service Type</option>
+          {ServiceType.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
+
                  <div>
                  <label className='mb-2 block'>Configuration and Accessories</label>
             <textarea
@@ -332,7 +296,9 @@ const EntryForm= () => {
                 className="w-full text-sm  border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
                 defaultValue={""}
                 />
+                
                  </div>
+
       <div>
         <div>
             <label className='mb-2 block'>Problem Report and Status</label>
@@ -390,22 +356,18 @@ const EntryForm= () => {
           .
         </label>
       </div>
+        <div className='flex justify-end'>
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
-      <button
-        onClick={handleSubmit}
-        type="submit"
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      >
-        Submit
-      </button>
-      
-
-    </form>
-
-  </div>
-</>
-
-  )
-}
-
-export default EntryForm
+export default EntryForm;
