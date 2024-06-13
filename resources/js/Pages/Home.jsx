@@ -82,10 +82,7 @@ function Home() {
              
               <span className="-mr-1 font-medium">Jobs</span>
             </a>
-          </li>
-         
-
-          
+          </li>    
           </ul>
          </div>
     </div>

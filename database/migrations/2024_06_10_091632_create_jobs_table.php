@@ -21,7 +21,8 @@ return new class extends Migration
             $table->longText('psno')->nullable();
             $table->text('accon')->nullable(); //Accessories and Configuration
             $table->longText('prc');//Problem Report by the CUSTOMER
-            $table->text('action_taken')->nullable(); //actiontaken
+            $table->text('action_taken_customer')->nullable(); //actiontaken
+            $table->text('action_taken_provider')->nullable(); //actiontaken
             $table->text('return_condition')->nullable(); //return condition
             $table->date('delivery')->nullable(); //delivery date
             $table->integer('rough_estimate')->nullable();

@@ -78,6 +78,39 @@ class JobController extends Controller
         return response()->json($data);
     }
 
+    public function Update_Jobs(Request $request) {
+        
+    
+        $validatedData = $request->validate([
+            'id' => 'required|string',
+            'key' => 'required|string',
+            'value' => 'required'
+        ]);
+    
+
+        $job = Jobs::where('cus_id', $validatedData['id'])->first();
+    
+
+        if ($job) {
+    
+            $job->update([$validatedData['key'] => $validatedData['value']]);
+            
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Job updated successfully',
+                'data' => $job
+            ], 200);
+        } else {
+            // Return an error response if the job is not found
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found'
+            ], 404);
+        }
+    }
+    
+
     
     
 }
