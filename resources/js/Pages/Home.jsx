@@ -4,7 +4,7 @@ import JobsTable from './Components/JobsTable';
 import Info from './Components/Info';
 import BriefDiscription from './Components/BriefDiscription';
 import 'react-toastify/dist/ReactToastify.css';
-
+import JobCard from './Components/JobCard';
 
 function Home() {
 
@@ -24,6 +24,9 @@ function Home() {
     }
     if(CurrentComponent === 4){
       return <BriefDiscription/>
+    }
+     if(CurrentComponent === 5){
+        return <JobCard/>
     }
      else {
       return null; 
@@ -90,6 +93,15 @@ function Home() {
              
               <span className="-mr-1 font-medium">Reports</span>
             </a>
+            <li className="min-w-max">
+            <a
+              onClick={(e)=>SetCurrentComponent(5)}
+              aria-label="dashboard"
+              className="relative hover:bg-gradient-to-r from-sky-600 hover:text-white to-cyan-400 flex items-center space-x-4 px-4 py-3 text-gray-600">
+              <i class='bx bxs-spreadsheet text-black text-2xl hover:text-blue-400'></i>
+              <span className="-mr-1 font-medium">Job Card</span>
+            </a>
+          </li>
           </li>
           
           </ul>
