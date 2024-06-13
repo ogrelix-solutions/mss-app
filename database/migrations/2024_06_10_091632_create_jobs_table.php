@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
             $table->string('cus_id');
-            $table->integer('jnumber')->unique();
             $table->date('gdate')->nullable();
             $table->string('type');
             $table->text('jobstatus')->nullable();
