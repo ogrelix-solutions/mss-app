@@ -83,26 +83,8 @@ function Home() {
               <span className="-mr-1 font-medium">Jobs</span>
             </a>
           </li>
-          <li className="min-w-max">
-            <a
-              onClick={(e)=>SetCurrentComponent(4)}
-              aria-label="dashboard"
-              className="relative hover:bg-gradient-to-r from-sky-600 hover:text-white to-cyan-400 flex items-center space-x-4 px-4 py-3 text-gray-600"
-            >
-              <i class='bx bxs-report text-black text-2xl hover:text-blue-400'></i>
-             
-              <span className="-mr-1 font-medium">Reports</span>
-            </a>
-            <li className="min-w-max">
-            <a
-              onClick={(e)=>SetCurrentComponent(5)}
-              aria-label="dashboard"
-              className="relative hover:bg-gradient-to-r from-sky-600 hover:text-white to-cyan-400 flex items-center space-x-4 px-4 py-3 text-gray-600">
-              <i class='bx bxs-spreadsheet text-black text-2xl hover:text-blue-400'></i>
-              <span className="-mr-1 font-medium">Job Card</span>
-            </a>
-          </li>
-          </li>
+         
+
           
           </ul>
          </div>

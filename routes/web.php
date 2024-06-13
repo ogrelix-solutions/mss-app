@@ -14,3 +14,7 @@ Route::get('/', function () {
 
 Route::post('/api/jobentry', [JobController::class, 'job_entry']);
 Route::post('/api/jobsget',[JobController::class,'Get_Job']);
+
+Route::get('/jobcard',function () {
+    return view('jobcard');
+});
