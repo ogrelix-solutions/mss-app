@@ -41,7 +41,7 @@ const InputField = ({max, label, value, onChange, type = "text", id, placeholder
 );
 
 const EntryForm = () => {
-  
+
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [phnnumber, setphnnumber] = useState("");
@@ -57,7 +57,7 @@ const EntryForm = () => {
   const [configuration, setconfiguration] = useState("");
   const [serialno, setserialno] = useState("");
   const [stype, setstype] = useState("");
-  const ServiceType = ["It service"]
+  const ServiceType = ["Laptop","Desktop Computer","Motherboard","Mobile","Monitor","Memory Card","External Hard Disk","Printer","All in One Inkjet Printer","Speaker","Switch","DVR","Pendrive","NVR","CAMERA CCTV","WEB CAMERA","CCTV SMPS","Normal SMPS"]
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -119,12 +119,12 @@ const EntryForm = () => {
       if(!productreport){
         toast.error("Enter Problem Statement")
       }
-      
+
     }
 
     }
-  
-    
+
+
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-16">
@@ -274,7 +274,7 @@ const EntryForm = () => {
           onChange={(e) => setstype(e.target.value)}
           id="stype"
           className="border border-gray-300 mt-6 h-[50%] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        > 
+        >
           <option value="" disabled selected>Select a Service Type</option>
           {ServiceType.map((option, index) => (
             <option key={index} value={option}>
@@ -296,7 +296,7 @@ const EntryForm = () => {
                 className="w-full text-sm  border border-gray-600 rounded-lg py-2 px-3 focus:outline-none focus:border-blue-700"
                 defaultValue={""}
                 />
-                
+
                  </div>
 
       <div>
