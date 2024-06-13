@@ -11,24 +11,38 @@ use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
 {
-    public function job_entry(Request $request)
-    {
+    public function job_entry(Request $request){
         $data = $request->all();
-        
-        // Generate unique customer ID
-        $customerId = $this->generateCustomerId();
-
+    
         $validator = Validator::make($request->all(), [
-            // Your validation rules here
+            "name"=>["required","string"],
+            "phnnumber"=>["required","integer"],
+            "whatsapp"=>["integer"],
+            "email"=>["required","email"],
+            "address"=>["required","string","max:100"],
+            "stype"=>["required","string"],
+            "productreport"=>["required","string"],
+            "configuration"=>["required","string"]
         ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
             return response()->json(["error" => $errors], 400);
         }
-
-        $job = Customer::create([
-            "cus_id" => $customerId, 
+        $customerId = $this->generateCustomerId();
+        $Customer = Customer::create([
+            "cus_id"=>$customerId,
+            "name"=> $data["name"],
+            "pnumber"=> $data["phnnumber"],
+            "wnumber"=> $data["whatsapp"],
+            "email"=>$data["email"],
+            "address"=>$data["address"]
+        ]);
+        $jobs = Jobs::create([
+            "cus_id"=>$customerId,
+            "type"=>$data["stype"],
+            "prc"=> $data["productreport"],
+            "accon"=> $data["configuration"],
         ]);
 
         return response()->json(201);
@@ -48,5 +62,23 @@ class JobController extends Controller
         }
         return $customerId;
     }
+
+
+    public function Get_Job(Request $request){
+        $Customers = Customer::all();
+        $data = [];
+    
+        foreach($Customers as $Customer){
+            $jobs = Jobs::where('cus_id', $Customer->cus_id)->get();
+            $data[] = [
+                'customer' => $Customer,
+                'jobs' => $jobs
+            ];
+        }
+        return response()->json($data);
+    }
+
+    
+    
 }
 
