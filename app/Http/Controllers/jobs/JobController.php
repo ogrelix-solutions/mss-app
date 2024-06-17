@@ -33,7 +33,8 @@ class JobController extends Controller
             "type" => $data["stype"],
             "prc" => $data["productreport"],
             "accon" => $data["configuration"],
-            "adate" => $data["adate"],  // Include adate in Jobs model creation
+            "adate" => $data["adate"], 
+            "gdate"=>$data["gdate"]
         ]);
     
         return response()->json(null, 201);
@@ -101,13 +102,25 @@ class JobController extends Controller
         }
     }
 
-    public function downloadJobCard()
+    public function downloadJobCard(Request $request)
     {
-        $data = []; 
-        $pdf = PDF::loadView('jobcard', $data);
-        return $pdf->stream('jobcard.pdf');
-    }
 
+        $id  = $request->only('id');
+        $job = Jobs::where('id', $id)->first();
+    
+        $customer = Customer::where('cus_id', $job->cus_id)->first();
+    
+      
+        $data = [
+            'job' => $job,
+            'customer' => $customer
+        ];
+    
+        $pdf = PDF::loadView('jobcard', $data);
+    
+        return $pdf->download('jobcard.pdf');
+    }
+    
     
     
 }

@@ -10,6 +10,9 @@ const BriefDescription = ({ job, customer }) => {
   const [customerInfo, setCustomerInfo] = useState(customer);
   const [editingField, setEditingField] = useState(null);
 
+
+
+
   const fieldMap = {
     'Given Date': 'gdate',
     'Phone': 'pnumber',
@@ -18,8 +21,7 @@ const BriefDescription = ({ job, customer }) => {
     'Configuration and Accessories': 'accon',
     'S.No Details': 'psno',
     'Problem Reported and Status': 'prc',
-    'Action Taken Provider': 'action_taken_provider',
-    'Action Taken Customer': 'action_taken_customer',
+    'Action Taken': 'action_taken',
     'Return Condition': 'return_condition',
     'Delivery Date': 'ddate',
     'Rough Estimate': 'rough_estimate',
@@ -144,21 +146,7 @@ const BriefDescription = ({ job, customer }) => {
       );
     };
   
-  const DateInput = ({ label, value, onChange }) => {
-    return (
-      <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-        <p className="text-gray-600 capitalize">{label}</p>
-        <div className="flex items-center">
-          <input
-            type="date"
-            value={value}
-            onChange={onChange}
-            className="border w-full p-2 rounded"
-          />
-        </div>
-      </div>
-    );
-  };
+
 
   const NormalField = (label, value) => (
     <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
@@ -168,6 +156,24 @@ const BriefDescription = ({ job, customer }) => {
       </div>
     </div>
   );
+  const handleDownload = () => {
+    axios.post('download-jobcard', { id:"1" }, {
+        responseType: 'blob',
+    }).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'jobcard.pdf');
+        document.body.appendChild(link);
+        link.click();
+
+
+        link.parentNode.removeChild(link);
+    }).catch(error => {
+        console.error('Error downloading PDF:', error);
+    });
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
@@ -193,8 +199,8 @@ const BriefDescription = ({ job, customer }) => {
           {renderField('job', 'Configuration and Accessories', 'accon', jobInfo.accon)}
           {renderField('job', 'S.No Details', 'psno', jobInfo.psno)}
           {renderField('job', 'Problem Reported and Status', 'prc', jobInfo.prc)}
-          {renderField('job', 'Action Taken Provider', 'action_taken_provider', jobInfo.action_taken_provider)}
-          {renderField('job', 'Action Taken Customer', 'action_taken_customer', jobInfo.action_taken_customer)}
+
+          {renderField('job', 'Action Taken', 'action_taken', jobInfo.action_taken)}
           {renderField('job', 'Return Condition', 'return_condition', jobInfo.return_condition)}
           {renderField('job', 'Delivery Date', 'ddate', jobInfo.ddate)}
 
@@ -234,7 +240,7 @@ const BriefDescription = ({ job, customer }) => {
                   </svg>
                   <span>JobCard.pdf</span>
                 </div>
-                <a href="#" className="text-indigo-600 hover:underline">Download</a>
+                <a onClick={(e)=>handleDownload()} className="text-indigo-600 hover:underline">Download</a>
               </div>
               <div className="border-2 flex items-center p-2 rounded justify-between space-x-2">
                 <div className="space-x-2 truncate">

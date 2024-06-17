@@ -32,7 +32,7 @@ function Home() {
         return <CustomerEntry/>
     }
     if(CurrentComponent === 6){
-      return <DownloadJobCardButton/>
+      return <CustomerTable/>
   }
      else {
       return null; 

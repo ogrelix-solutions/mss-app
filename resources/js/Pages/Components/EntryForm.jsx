@@ -70,7 +70,8 @@ const EntryForm = () => {
       productreport,
       configuration,
       serialno,
-      adate
+      adate,
+      gdate
     };
 
     if (stype && productreport && configuration) {
