@@ -16,7 +16,7 @@
             background: #fff;
             width: 100%;
             max-width: 700px;
-            border: 1px solid #ccc;
+           
         }
         .header {
             display: flex;
@@ -46,7 +46,7 @@
         }
         p {
             margin: 5px 0;
-            color: #666;
+            color: black;
         }
         .jobcard-header {
             text-align: center;
@@ -75,7 +75,8 @@
             border-collapse: collapse;
         }
         table, th, td {
-            border: 1px solid #ccc;
+            border: 1px solid ;
+
         }
         th, td {
             padding: 5px;
@@ -84,13 +85,15 @@
         }
         .config {
             padding: 5px;
-            border: 1px solid #ccc;
+           border: 1px solid ;
+
             margin-top: 10px;
         }
         .terms {
             margin-top: 10px;
             padding: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid ;
+           
             text-align: left;
         }
         .terms ol {
@@ -99,7 +102,7 @@
         }
         .terms ol li {
             margin-bottom: 5px;
-            color: #666;
+            color: black;
             font-size: 12px;
         }
         .acceptance-table {
@@ -109,7 +112,8 @@
         }
         .acceptance-table td {
             padding: 5px;
-            border: 1px solid #ccc;
+           border: 1px solid ;
+        
             text-align: left;
         }
         .acceptance-table td:first-child {
@@ -144,27 +148,27 @@
         </div>
         <table>
             <tr>
-                <td>Service type:</td>
+                <td><strong>Service type:</strong></td>
                 <td>{{ $job->type }}</td>
             </tr>
             <tr>
-                <td>Customer Name:</td>
+                <td><strong>Customer Name:</strong></td>
                 <td>{{ $customer->name }}</td>
             </tr>
             <tr>
-                <td>Address:</td>
+                <td><strong>Address:</strong></td>
                 <td>{{ $customer->address }}</td>
             </tr>
             <tr>
-                <td>Contact No.1:</td>
+                <td><strong>Contact No.1:</strong></td>
                 <td>{{ $customer->pnumber }}</td>
             </tr>
             <tr>
-                <td>Whatsapp No:</td>
+                <td><strong>Whatsapp No:</strong></td>
                 <td>{{ $customer->wnumber }}</td>
             </tr>
             <tr>
-                <td>E-mail ID:</td>
+                <td><strong>E-mail ID:</strong></td>
                 <td>{{ $customer->email }}</td>
             </tr>
         </table>
@@ -182,7 +186,7 @@
                 <th>Rough Estimate</th>
             </tr>
             <tr>
-                <td rowspan="3" style="text-align: center">{{ $job->accon }}</td>
+                <td rowspan="2" style="text-align: center">{{ $job->accon }}</td>
                 <td rowspan="1"></td>
                 <td>{{ $job->psno ? $job->psno : "-"}}</td>
                 <td rowspan="2">{{ $job->rough_estimate }} Rs</td>
@@ -193,7 +197,7 @@
             </tr>
         </table>
         <div class="terms">
-            <h4>Terms and Conditions</h4>
+            <h4 style="text-align:center">Terms and Conditions</h4>
             <ol>
                 <li>The above materials will be delivered only against the submission of this job card.</li>
                 <li>All the materials must be collected within 28 days from the job date.</li>
@@ -205,18 +209,18 @@
                 <li>Subject to the Chennai jurisdiction.</li>
             </ol>
         </div>
-        <p style="text-align: center">I Accept all the Above Terms for Multisolutions & Systems</p>
+        <p style="text-align: center ; margin-top:50px"> <strong>I Accept all the Above Terms for Multisolutions & Systems</strong></p>
         <table>
             <tr>
                 <td><strong>Customer Name:</strong></td>
-                <td>{{ $customer->name }}</td>
+                <td><strong>{{ $customer->name }}</strong></td>
             </tr>
             <tr>
                 <td><strong>Signature with Date:</strong></td>
                 <td style="height: 40px"></td>
             </tr>
         </table>
-        <table style="padding-left:80%">
+        <table style="padding-left:57.6%">
         <td style="height: 100px"><strong>For Multisolutions</strong></td>
         </table>
     </div>

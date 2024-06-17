@@ -35,7 +35,7 @@ function Home() {
       return <CustomerTable/>
   }
      else {
-      return null; 
+      return <Info/>
     }
   }
 
@@ -111,6 +111,7 @@ function Home() {
               <span className="-mr-1 font-medium">Customers</span>
             </a>
           </li>   
+          
           </ul>
          </div>
     </div>

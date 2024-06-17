@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from '../api/axios';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { toWords } from 'number-to-words';
 
 
@@ -65,7 +65,7 @@ const BriefDescription = ({ job, customer }) => {
         id: jobInfo.cus_id,
       });
       if (response.status === 200) {
-        toast.success('Field updated successfully!');
+        toast.success(fieldKey+' updated successfully!');
       }
       setEditingField(null);
     } catch (error) {
@@ -177,6 +177,7 @@ const BriefDescription = ({ job, customer }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
+      <ToastContainer />
       <div className="max-w-4xl bg-white w-full rounded-lg shadow-xl">
         <div className="p-4 border-b flex justify-between">
           <div>
@@ -205,7 +206,7 @@ const BriefDescription = ({ job, customer }) => {
           {renderField('job', 'Delivery Date', 'ddate', jobInfo.ddate)}
 
           {renderField('job', 'Rough Estimate', 'rough_estimate', jobInfo.rough_estimate, true)}
-          {renderField('job', 'Amount Breakup', 'amount_breakup', jobInfo.amount_breakup, true)}
+          {renderField('job', 'Amount Breakup', 'amount_breakup', jobInfo.amount_breakup)}
           {renderField('job', 'Final Amount', 'final_amount', jobInfo.final_amount, true)}
           {renderField('job', 'Cash Mode', 'cash_mode', jobInfo.cash_mode)}
 

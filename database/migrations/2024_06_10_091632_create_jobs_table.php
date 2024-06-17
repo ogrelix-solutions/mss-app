@@ -26,7 +26,7 @@ return new class extends Migration
             $table->text('return_condition')->nullable(); //return condition
             $table->date('delivery')->nullable(); //delivery date
             $table->integer('rough_estimate')->nullable()->default(0);
-            $table->integer('amount_breakup')->nullable()->default(0);
+            $table->text('amount_breakup')->nullable();
             $table->integer('final_amount')->nullable()->default(0);
             $table->string('cash_mode')->nullable();
             $table->integer('cash_field')->nullable();
