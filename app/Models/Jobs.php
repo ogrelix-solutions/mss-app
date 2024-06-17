@@ -12,6 +12,6 @@ class Jobs extends Model
 
     protected $fillable =
     [
-        "cus_id","jnumber","g_date","type","jobstatus","ddate","psno","accon","prc","action_taken","return_condition","delivery","rough_estimate","amount_breakup","final_amount","cash_mode","cash_field","remarks_mss"
+        "cus_id","jnumber","adate","gdate","type","jobstatus","ddate","psno","accon","prc","action_taken","return_condition","delivery","rough_estimate","amount_breakup","final_amount","cash_mode","cash_field","remarks_mss"
     ];
 }

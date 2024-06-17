@@ -5,49 +5,40 @@ namespace App\Http\Controllers\jobs;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Jobs;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 
 class JobController extends Controller
 {
-    public function job_entry(Request $request){
+    public function job_entry(Request $request) {
         $data = $request->all();
     
         $validator = Validator::make($request->all(), [
-            "name"=>["required","string"],
-            "phnnumber"=>["required","integer"],
-            "whatsapp"=>["integer"],
-            "email"=>["required","email"],
-            "address"=>["required","string","max:100"],
-            "stype"=>["required","string"],
-            "productreport"=>["required","string"],
-            "configuration"=>["required","string"]
+            "cusid"=>["required"],
+            "stype" => ["required", "string"],
+            "productreport" => ["required", "string"],
+            "configuration" => ["required", "string"],
+            "adate" => ["required", "date"],  // Validate adate field
         ]);
-
+    
         if ($validator->fails()) {
             $errors = $validator->errors();
             return response()->json(["error" => $errors], 400);
         }
-        $customerId = $this->generateCustomerId();
-        $Customer = Customer::create([
-            "cus_id"=>$customerId,
-            "name"=> $data["name"],
-            "pnumber"=> $data["phnnumber"],
-            "wnumber"=> $data["whatsapp"],
-            "email"=>$data["email"],
-            "address"=>$data["address"]
-        ]);
+    
         $jobs = Jobs::create([
-            "cus_id"=>$customerId,
-            "type"=>$data["stype"],
-            "prc"=> $data["productreport"],
-            "accon"=> $data["configuration"],
+            "cus_id" => $data["cusid"],
+            "type" => $data["stype"],
+            "prc" => $data["productreport"],
+            "accon" => $data["configuration"],
+            "adate" => $data["adate"],  // Include adate in Jobs model creation
         ]);
-
-        return response()->json(201);
+    
+        return response()->json(null, 201);
     }
-
+    
 
     private function generateCustomerId()
     {
@@ -102,14 +93,20 @@ class JobController extends Controller
                 'data' => $job
             ], 200);
         } else {
-            // Return an error response if the job is not found
+
             return response()->json([
                 'success' => false,
                 'message' => 'Job not found'
             ], 404);
         }
     }
-    
+
+    public function downloadJobCard()
+    {
+        $data = []; 
+        $pdf = PDF::loadView('jobcard', $data);
+        return $pdf->stream('jobcard.pdf');
+    }
 
     
     

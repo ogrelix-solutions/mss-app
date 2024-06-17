@@ -1,11 +1,35 @@
+
 import React, { useState } from 'react';
 import axios from '../api/axios';
 import { toast } from 'react-toastify';
+import { toWords } from 'number-to-words';
+
 
 const BriefDescription = ({ job, customer }) => {
   const [jobInfo, setJobInfo] = useState(job);
   const [customerInfo, setCustomerInfo] = useState(customer);
   const [editingField, setEditingField] = useState(null);
+
+  const fieldMap = {
+    'Given Date': 'gdate',
+    'Phone': 'pnumber',
+    'Whatsapp': 'wnumber',
+    'Service Type': 'type',
+    'Configuration and Accessories': 'accon',
+    'S.No Details': 'psno',
+    'Problem Reported and Status': 'prc',
+    'Action Taken Provider': 'action_taken_provider',
+    'Action Taken Customer': 'action_taken_customer',
+    'Return Condition': 'return_condition',
+    'Delivery Date': 'ddate',
+    'Rough Estimate': 'rough_estimate',
+    'Amount Breakup': 'amount_breakup',
+    'Final Amount': 'final_amount',
+    'Cash Mode': 'cash_mode',
+    'Remarks': 'remarks',
+    'Cash Field': 'cash_field'
+  };
+
 
   const handleInputChange = (e, section, field) => {
     const value = e.target.value;
@@ -20,18 +44,23 @@ const BriefDescription = ({ job, customer }) => {
     setEditingField(field);
   };
 
+  const handleCancelClick = () => {
+    setEditingField(null);
+  };
+
   const handleUpdateClick = async () => {
     if (!editingField) return;
 
-    const fieldValue = jobInfo.hasOwnProperty(editingField)
-      ? jobInfo[editingField]
-      : customerInfo[editingField];
+    const fieldKey = fieldMap[editingField] || editingField;
+    const fieldValue = jobInfo.hasOwnProperty(fieldKey)
+      ? jobInfo[fieldKey]
+      : customerInfo[fieldKey];
 
     try {
       const response = await axios.post('updatejobs', {
-        key: editingField,
+        key: fieldKey,
         value: fieldValue,
-        id:jobInfo.cus_id
+        id: jobInfo.cus_id,
       });
       if (response.status === 200) {
         toast.success('Field updated successfully!');
@@ -43,47 +72,102 @@ const BriefDescription = ({ job, customer }) => {
     }
   };
 
-  const renderField = (section, field, value) => {
-    const isEditing = editingField === field;
-    return (
-      <div key={field} className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-        <p className="text-gray-600 capitalize">{field.replace('_', ' ')}</p>
-        <div className="flex items-center">
-          {isEditing ? (
-            <input
-              type="text"
-              name={field} 
-              value={value}
-              onChange={(e) => handleInputChange(e, section, field)}
-              className="border p-2 rounded flex-grow"
-            />
-          ) : (
-            <span className="flex-grow">{value}</span>
-          )}
-          <button
-            className={`ml-2 ${isEditing ? 'text-green-600' : 'text-blue-600'}`}
-            onClick={() => (isEditing ? handleUpdateClick() : handleEditClick(field))}
-          >
-            {isEditing ? 'Update' : <i className="bx bxs-edit"></i>}
-          </button>
+
+  
+    const renderField = (section, label, field, value, alphanumeric) => {
+      const isEditing = editingField === label;
+      const options = ['Upi', 'Cash on Delivery', 'net banking'];
+  
+      return (
+        <div key={field} className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+          <p className="text-gray-600 capitalize">{label}</p>
+          <div className="flex items-center">
+            {isEditing && (field === 'ddate' || field === 'gdate')? (
+              <input
+                type="date"
+                name={field}
+                value={value}
+                onChange={(e) => handleInputChange(e, section, field)}
+                className="border p-2 rounded flex-grow"
+              />
+            ) : isEditing && field === 'cash_mode'? (
+              <div>
+                {options.map((option) => (
+                  <label key={option} className="flex items-center mr-4">
+                    <input
+                      type="radio"
+                      name={field}
+                      value={option}
+                      checked={value === option}
+                      onChange={(e) => handleInputChange(e, section, field)}
+                      className="form-radio"
+                    />
+                    <span className="ml-2">{option}</span>
+                  </label>
+                ))}
+              </div>
+            ) : isEditing? (
+              <input
+                type="text"
+                name={field}
+                value={value}
+                onChange={(e) => handleInputChange(e, section, field)}
+                className="border p-2 rounded flex-grow"
+              />
+            ) : (
+              field === 'ddate' || field === 'gdate'? (
+                <span className="flex-grow">{value}</span>
+              ) : alphanumeric? (
+                <span className="flex-grow">
+                  {value} Rs. <span className='text-sm'>{alphanumeric && toWords(value).toUpperCase()}</span>
+                </span>
+              ) : (
+                <span className="flex-grow">{value}</span>
+              )
+            )}
+            <button
+              className={`ml-2 ${isEditing? 'text-green-600' : 'text-blue-600'}`}
+              onClick={() => (isEditing? handleUpdateClick() : handleEditClick(label))}
+            >
+              {isEditing? 'Save' : <i className="bx bxs-edit"></i>}
+            </button>
+            {isEditing && (
+              <button
+                className="ml-2 text-red-600"
+                onClick={handleCancelClick}
+              >
+                Cancel
+              </button>
+            )}
+          </div>
         </div>
-      </div>
-    );
-  };
-
-  const NormalField = ( field , value) => {
-
+      );
+    };
+  
+  const DateInput = ({ label, value, onChange }) => {
     return (
       <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-        <p className="text-gray-600 capitalize">{field.replace('_', ' ')}</p>
+        <p className="text-gray-600 capitalize">{label}</p>
         <div className="flex items-center">
-          
-            <span className="flex-grow">{value}</span>
-
+          <input
+            type="date"
+            value={value}
+            onChange={onChange}
+            className="border w-full p-2 rounded"
+          />
         </div>
       </div>
     );
   };
+
+  const NormalField = (label, value) => (
+    <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+      <p className="text-gray-600 capitalize">{label}</p>
+      <div className="flex items-center">
+        <span className="flex-grow">{value}</span>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
@@ -97,26 +181,28 @@ const BriefDescription = ({ job, customer }) => {
         </div>
 
         <div>
-          {NormalField('Customer_ID' , customerInfo.cus_id)}
-          {NormalField('Name' , customerInfo.name)}
-          {renderField('job', 'gdate', jobInfo.gdate)}
-          {renderField('customer', 'pnumber', customerInfo.pnumber)}
-          {renderField('customer', 'wnumber', customerInfo.wnumber)}
-          {renderField('customer', 'email', customerInfo.email)}
-          {renderField('customer', 'address', customerInfo.address)}
-          {renderField('job', 'type', jobInfo.type)}
-          {renderField('job', 'accon', jobInfo.accon)}
-          {renderField('job', 'psno', jobInfo.psno || '-')}
-          {renderField('job', 'prc', jobInfo.prc)}
-          {renderField('job', 'action_taken_provider', jobInfo.action_taken_provider)}
-          {renderField('job', 'action_taken_customer', jobInfo.action_taken_customer)}
-          {renderField('job', 'return_condition', 'Returned / Good')}
-          {renderField('job', 'deliver_date', '23.10.13')}
-          {renderField('job', 'rough_estimate', '-')}
-          {renderField('job', 'amount_breakup', '600')}
-          {renderField('job', 'final_amount', '-')}
-          {renderField('job', 'cash_mode', '-')}
-          
+          {NormalField('Customer ID', customerInfo.cus_id)}
+          {NormalField('Name', customerInfo.name)}
+          {renderField('job', 'Given Date', 'gdate', jobInfo.gdate)}
+          {renderField('job', 'Approximate Date', 'adate', jobInfo.adate)}
+          {NormalField('Phone', customerInfo.pnumber)}
+          {NormalField('Whatsapp', customerInfo.wnumber)}
+          {NormalField('Email', customerInfo.email)}
+          {NormalField('Address', customerInfo.address)}
+          {renderField('job', 'Service Type', 'type', jobInfo.type)}
+          {renderField('job', 'Configuration and Accessories', 'accon', jobInfo.accon)}
+          {renderField('job', 'S.No Details', 'psno', jobInfo.psno)}
+          {renderField('job', 'Problem Reported and Status', 'prc', jobInfo.prc)}
+          {renderField('job', 'Action Taken Provider', 'action_taken_provider', jobInfo.action_taken_provider)}
+          {renderField('job', 'Action Taken Customer', 'action_taken_customer', jobInfo.action_taken_customer)}
+          {renderField('job', 'Return Condition', 'return_condition', jobInfo.return_condition)}
+          {renderField('job', 'Delivery Date', 'ddate', jobInfo.ddate)}
+
+          {renderField('job', 'Rough Estimate', 'rough_estimate', jobInfo.rough_estimate, true)}
+          {renderField('job', 'Amount Breakup', 'amount_breakup', jobInfo.amount_breakup, true)}
+          {renderField('job', 'Final Amount', 'final_amount', jobInfo.final_amount, true)}
+          {renderField('job', 'Cash Mode', 'cash_mode', jobInfo.cash_mode)}
+
           <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
             <p className="text-gray-600">Cash Field</p>
             <div className="flex items-center space-x-4">
@@ -124,7 +210,7 @@ const BriefDescription = ({ job, customer }) => {
                 <label key={option} className="flex items-center">
                   <input
                     type="radio"
-                    name="cashMode"
+                    name="cash_field"
                     value={option}
                     checked={jobInfo.cash_field === option}
                     className="form-radio"
@@ -136,8 +222,8 @@ const BriefDescription = ({ job, customer }) => {
             </div>
           </div>
 
-          {renderField('job', 'remarks', 'Done at SASI COMP')}
-          
+          {renderField('job', 'Remarks', 'remarks', jobInfo.remarks)}
+
           <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4">
             <p className="text-gray-600">Attachments</p>
             <div className="space-y-2">

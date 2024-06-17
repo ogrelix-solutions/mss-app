@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('cus_id');
             $table->date('gdate')->nullable();
+            $table->date('adate')->nullable();
             $table->string('type');
             $table->text('jobstatus')->nullable();
             $table->date('ddate')->nullable();
@@ -25,10 +26,10 @@ return new class extends Migration
             $table->text('action_taken_provider')->nullable(); //actiontaken
             $table->text('return_condition')->nullable(); //return condition
             $table->date('delivery')->nullable(); //delivery date
-            $table->integer('rough_estimate')->nullable();
-            $table->integer('amount_breakup')->nullable();
-            $table->integer('final_amount')->nullable();
-            $table->integer('cash_mode')->nullable();
+            $table->integer('rough_estimate')->nullable()->default(0);
+            $table->integer('amount_breakup')->nullable()->default(0);
+            $table->integer('final_amount')->nullable()->default(0);
+            $table->string('cash_mode')->nullable();
             $table->integer('cash_field')->nullable();
             $table->integer('remarks_mss')->nullable();
             $table->timestamps();

@@ -22,13 +22,24 @@ body {
 .header {
     display: flex;
     align-items: center;
-    justify-content: center;
     margin-bottom: 10px;
+    justify-content: center;
+    position: relative;
+}
+
+.header h1 {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
 }
 
 .header img {
+    position: absolute;
+    left: 0;
     margin-right: 10px;
-    height: 40px;
+    margin-left: 20px;
+    margin-top: 35px;
+    height: 70px;
 }
 
 h1 {
@@ -96,7 +107,6 @@ th, td {
 .config p {
     font-size: 12px;
     margin: 5px 0;
- 
 }
 
 .terms {
