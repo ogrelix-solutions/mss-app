@@ -78,7 +78,7 @@ const EntryForm = () => {
       try {
         const response = await axios.post('jobentry', formData);
         if (response.status === 200) {
-          toast.success('Form submitted successfully!');
+          return null
         }
       } catch (error) {
         console.error('Error:', error);
@@ -98,7 +98,7 @@ const EntryForm = () => {
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-16">
-      <ToastContainer />
+
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6 mb-6 lg:grid-cols-2">
           <div>
