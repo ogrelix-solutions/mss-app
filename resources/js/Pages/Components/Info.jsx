@@ -46,6 +46,8 @@ const Footer = () => {
 const Info = () => {
   return (
 <>
+  
+
 
   <section className="py-24 flex items-center  justify-center bg-white">
     <div className="mx-auto max-w-[43rem]">

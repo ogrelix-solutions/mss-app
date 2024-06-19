@@ -5,6 +5,9 @@ import Info from './Components/Info';
 import BriefDiscription from './Components/BriefDiscription';
 import 'react-toastify/dist/ReactToastify.css';
 import JobCard from './Components/JobCard';
+import CustomerEntry from './Components/CustomerEntry';
+import CustomerTable from './Components/CustomerTable';
+import DownloadJobCardButton from './Components/Download';
 
 function Home() {
 
@@ -26,10 +29,13 @@ function Home() {
       return <BriefDiscription/>
     }
      if(CurrentComponent === 5){
-        return <JobCard/>
+        return <CustomerEntry/>
     }
+    if(CurrentComponent === 6){
+      return <CustomerTable/>
+  }
      else {
-      return null; 
+      return <Info/>
     }
   }
 
@@ -44,8 +50,8 @@ function Home() {
       <div>
         <div className="w-max p-2.5">
           <img
-            src="https://tailus.io/images/logo.svg"
-            className="w-32"
+            src="../../images/mss.jpg"
+            className="w-10 bg-transparent"
             alt=""
           />
         </div>
@@ -69,7 +75,18 @@ function Home() {
             >
               <i class='bx bxs-file text-black text-2xl hover:text-blue-400'></i>
              
-              <span className="-mr-1 font-medium">Entry form</span>
+              <span className="-mr-1 font-medium">Job Entry</span>
+            </a>
+          </li>
+          <li className="min-w-max">
+            <a
+              onClick={(e)=>SetCurrentComponent(5)}
+              aria-label="dashboard"
+              className="relative hover:bg-gradient-to-r from-sky-600 hover:text-white to-cyan-400 flex items-center space-x-4 px-4 py-3 text-gray-600"
+            >
+              <i class='bx bxs-detail text-black text-2xl hover:text-blue-400'></i>
+             
+              <span className="-mr-1 font-medium">Customer form</span>
             </a>
           </li>
           <li className="min-w-max">
@@ -82,9 +99,18 @@ function Home() {
              
               <span className="-mr-1 font-medium">Jobs</span>
             </a>
-          </li>
-         
-
+          </li>    
+          <li className="min-w-max">
+            <a
+              onClick={(e)=>SetCurrentComponent(6)}
+              aria-label="dashboard"
+              className="relative hover:bg-gradient-to-r from-sky-600 hover:text-white to-cyan-400 flex items-center space-x-4 px-4 py-3 text-gray-600"
+            >
+              <i class='bx bxs-user-detail text-black text-2xl hover:text-blue-400'></i>
+             
+              <span className="-mr-1 font-medium">Customers</span>
+            </a>
+          </li>   
           
           </ul>
          </div>
