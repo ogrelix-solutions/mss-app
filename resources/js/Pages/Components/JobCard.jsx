@@ -106,7 +106,7 @@ Cell : 98409 81945, 9677269955, multisolutionssystems@gmail.com
                     Date of JOB CARD (Either Repaired or Not-repaired).   
             </h3>
             <h3>
-            8.  Subject to the Chennai Jurisdiction
+            8.  Subject to the Chennai Jurisdiction
             </h3>
           </div>
         </div>

@@ -2,8 +2,9 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <footer className="bg-white ">
-  <div className="container px-6 py-8 mx-auto">
+        <footer className="bg-white absolute px-16 w-full -z-10 bottom-0">
+    
+  <div className=" py-8 ">
     <div className="flex flex-col items-center text-center">
     <i class='bx bx-current-location text-lg  text-indigo-600/95' ></i>
       <p className="max-w-md mx-auto mt-4 text-gray-500 dark:text-gray-400">
@@ -12,7 +13,7 @@ const Footer = () => {
       
     </div>
     <hr className="my-10   border-gray-200 " />
-    <div className="flex flex-col items-center sm:flex-row sm:justify-between">
+    <div className="flex items-center sm:flex-row sm:justify-between">
       <p className="text-sm text-gray-500">
         © Copyright 2024. All Rights Reserved.
       </p>
@@ -33,7 +34,6 @@ const Footer = () => {
           {" "}
           Privacy{" "}
         </a>
-        
       </div>
     </div>
   </div>
@@ -64,9 +64,9 @@ const Info = () => {
     </div>
     
   </section>
-  <div className='w-full'>
-     <Footer/>
-     </div>
+  <div className='flex  Justify-center'>
+     <Footer />
+  </div>
 </>
 
 
