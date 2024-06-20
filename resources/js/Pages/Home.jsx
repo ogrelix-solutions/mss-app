@@ -64,7 +64,7 @@ function Home() {
             >
               <i class='bx bxs-dashboard text-black text-2xl hover:text-blue-400'></i>
              
-              <span className="-mr-1 font-medium">Info</span>
+              <span className="-mr-1 font-medium cursor-pointer">Info</span>
             </a>
           </li>
           <li className="min-w-max">
@@ -75,7 +75,7 @@ function Home() {
             >
               <i class='bx bxs-file text-black text-2xl hover:text-blue-400'></i>
              
-              <span className="-mr-1 font-medium">Job Entry</span>
+              <span className="-mr-1 font-medium cursor-pointer">Job Entry</span>
             </a>
           </li>
           <li className="min-w-max">
@@ -86,7 +86,7 @@ function Home() {
             >
               <i class='bx bxs-detail text-black text-2xl hover:text-blue-400'></i>
              
-              <span className="-mr-1 font-medium">Customer form</span>
+              <span className="-mr-1 font-medium cursor-pointer">Customer form</span>
             </a>
           </li>
           <li className="min-w-max">
@@ -97,7 +97,7 @@ function Home() {
             >
               <i class='bx bxs-briefcase text-black text-2xl hover:text-blue-400'></i>
              
-              <span className="-mr-1 font-medium">Jobs</span>
+              <span className="-mr-1 font-medium cursor-pointer">Jobs</span>
             </a>
           </li>    
           <li className="min-w-max">
@@ -108,7 +108,7 @@ function Home() {
             >
               <i class='bx bxs-user-detail text-black text-2xl hover:text-blue-400'></i>
              
-              <span className="-mr-1 font-medium">Customers</span>
+              <span className="-mr-1 font-medium cursor-pointer">Customers</span>
             </a>
           </li>   
           

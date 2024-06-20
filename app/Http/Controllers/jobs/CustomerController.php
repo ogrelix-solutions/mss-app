@@ -17,7 +17,7 @@ class CustomerController extends Controller
     
         $validator = Validator::make($request->all(), [
             "name" => ["required", "string"],
-            "phnnumber" => ["required", "integer"],
+            "phnnumber" => ["required", "integer",],
             "whatsapp" => ["integer"],
             "email" => ["required", "email"],
             "address" => ["required", "string", "max:100"],

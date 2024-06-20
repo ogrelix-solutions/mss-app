@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <footer className="bg-white absolute px-16 w-full -z-10 bottom-0">
+        <footer className="bg-white absolute px-16 w-full -z-10 bottom-0 inset-x-0">
     
   <div className=" py-8 ">
     <div className="flex flex-col items-center text-center">
@@ -56,7 +56,7 @@ const Info = () => {
           Job Management System
         </p>
         <h1 className="mt-3 text-[3.5rem] font-bold leading-[4rem] tracking-tight text-black">
-         Multi Solution & Systems
+         Multi solutions & Systems
         </h1>
         <p className="mt-3 text-lg leading-relaxed text-slate-400">
         Laptop Repair & Services offer a wide range of repair and upgrade services together with first-rate client care. They have a team of knowledgeable hardware engineers and technicians who can repair and upgrade laptops and desktops. The technicians can identify the issue and suggest solutions based on the severity of the issue.

@@ -70,6 +70,7 @@ const CustomerEntry = () => {
     if (!email) newErrors.email = "Email is required";
     if (!streetAdress) newErrors.streetAdress = "Street address is required";
     if (!city) newErrors.city = "City is required";
+    if (!state) newErrors.state = "State is required";
     if (!postalcode) newErrors.postalcode = "Postal code is required";
     if (!country) newErrors.country = "Country is required";
     return newErrors;
@@ -91,6 +92,7 @@ const CustomerEntry = () => {
       whatsapp,
       email,
       address,
+      state,
     };
 
 
@@ -102,6 +104,7 @@ const CustomerEntry = () => {
         }
       } catch (error) {
         console.error('Error:', error);
+        toast.error("There is an error")
       }
     }
     
@@ -135,7 +138,7 @@ const CustomerEntry = () => {
             errorMessage={errors.lastname}
           />
           <InputField
-            max={10}
+            maxLength={10}
             label="Phone number"
             value={phnnumber}
             onChange={(e) => setphnnumber(e.target.value)}
@@ -146,12 +149,13 @@ const CustomerEntry = () => {
             errorMessage={errors.phnnumber}
           />
           <InputField
+            maxLength={10}          
             label="WhatsApp Number"
             value={whatsapp}
             onChange={(e) => setwhatsapp(e.target.value)}
             type="tel"
             id="wanumber"
-            placeholder="1234567890"
+            placeholder="123-45-678"
             errorMessage={errors.whatsapp}
           />
         </div>
@@ -195,11 +199,12 @@ const CustomerEntry = () => {
             errorMessage={errors.city}
           />
           <InputField
-            label="State / Province / Region"
+            label="State"
             value={state}
             onChange={(e) => setstate(e.target.value)}
             id="state"
             placeholder="tamilnadu"
+            errorMessage={errors.state}
           />
           <InputField
             label="Postal Zip Code"
