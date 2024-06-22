@@ -44,6 +44,37 @@ class CustomerController extends Controller
         return response()->json(null, 201);
     }
 
+    public function Update_Customer(Request $request) {
+        
+    
+        $validatedData = $request->validate([
+            'id' => 'required|string',
+            'key' => 'required|string',
+            'value' => 'required'
+        ]);
+    
+
+        $customer = Customer::where('cus_id', $validatedData['id'])->first();
+    
+
+        if ($customer) {
+    
+            $customer->update([$validatedData['key'] => $validatedData['value']]);
+            
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Customer updated successfully',
+                'data' => $customer
+            ], 200);
+        } else {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Job not found'
+            ], 404);
+        }
+    }
     private function generateCustomerId()
     {
         $lastCustomer = Customer::orderBy('id', 'desc')->first();

@@ -32,8 +32,9 @@ return new class extends Migration
             $table->text('amount_breakup')->nullable();
             $table->integer('final_amount')->nullable()->default(0);
             $table->string('cash_mode')->nullable();
-            $table->integer('cash_field')->nullable();
+            $table->string('cash_field')->default('Unpaid');
             $table->integer('remarks_mss')->nullable();
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

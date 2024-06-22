@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from '../api/axios';
 import { ToastContainer, toast } from 'react-toastify';
+import LoadingBar from 'react-top-loading-bar';
 
 const EntryForm = () => {
+  const loadingBarRef = useRef(null);
   const [customerData, setCustomerData] = useState([]);
   const [phnnumber, setPhnnumber] = useState("");
   const [cusid, setCusId] = useState("");
@@ -13,6 +15,7 @@ const EntryForm = () => {
   const [adate, setApproxDate] = useState("");
   const [gdate, setGivenDate] = useState("");
   const [stype, setSType] = useState("");
+  const [acceptance , setacceptance] = useState(false)
   const ServiceType = ["Laptop", "Desktop Computer", "Motherboard", "Mobile", "Monitor", "Memory Card", "External Hard Disk", "Printer", "All in One Inkjet Printer", "Speaker", "Switch", "DVR", "Pendrive", "NVR", "CAMERA CCTV", "WEB CAMERA", "CCTV SMPS", "Normal SMPS"];
   const [errors, setErrors] = useState({});
 
@@ -25,7 +28,6 @@ const EntryForm = () => {
       const response = await axios.post('customerget');
       if (response.status === 200) {
         setCustomerData(response.data);
-        toast.success('Data Retrieved');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -35,7 +37,7 @@ const EntryForm = () => {
   const handleCustomerIdChange = (e) => {
     let inputCusId = e.target.value;
     if (!inputCusId.startsWith('cs-')) {
-      inputCusId = `cs-${inputCusId.replace(/cs-/g, '')}`;
+      inputCusId = `cs-${inputCusId.replace('cs', '')}`;
     }
     setCusId(inputCusId);
     const customer = customerData.find(c => c.cus_id === inputCusId);
@@ -63,7 +65,7 @@ const EntryForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    loadingBarRef.current.continuousStart();
     const formData = {
       cusid: cusid,
       stype,
@@ -74,14 +76,16 @@ const EntryForm = () => {
       gdate
     };
 
-    if (stype && productreport && configuration) {
+    if (acceptance && stype && productreport && configuration) {
       try {
         const response = await axios.post('jobentry', formData);
-        if (response.status === 200) {
-          return null
+        if (response.status === 201) {
+          toast.success("Form submitted successfully")
         }
       } catch (error) {
         console.error('Error:', error);
+      } finally{
+        loadingBarRef.current.complete();
       }
     } else {
       if (!stype) {
@@ -93,13 +97,17 @@ const EntryForm = () => {
       if (!productreport) {
         toast.error("Enter Problem Statement")
       }
+      if (!acceptance) {
+        toast.error("Accept the Terms and Conditions")
+      }
     
     }
   }
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-16">
-  <ToastContainer/>
+    <LoadingBar color="#f11946" ref={loadingBarRef} />
+    <ToastContainer autoClose={2000}/>
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6 mb-6 lg:grid-cols-2">
           <div>
@@ -214,6 +222,8 @@ const EntryForm = () => {
         <div className="flex items-start mb-6">
           <div className="flex items-center h-5">
             <input
+              value={acceptance}
+              onClick={(e)=>setacceptance(true)}
               id="remember"
               type="checkbox"
               defaultValue=""

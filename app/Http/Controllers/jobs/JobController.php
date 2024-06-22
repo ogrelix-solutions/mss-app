@@ -106,7 +106,7 @@ class JobController extends Controller
     {
 
         $id  = $request->only('id');
-        $job = Jobs::where('id', $id)->first();
+        $job = Jobs::where('cus_id', $id)->first();
     
         $customer = Customer::where('cus_id', $job->cus_id)->first();
     
@@ -119,6 +119,25 @@ class JobController extends Controller
         $pdf = PDF::loadView('jobcard', $data);
     
         return $pdf->download('jobcard.pdf');
+    }
+
+    public function downloadDelivery(Request $request)
+    {
+
+        $id  = $request->only('id');
+        $job = Jobs::where('cus_id', $id)->first();
+    
+        $customer = Customer::where('cus_id', $job->cus_id)->first();
+    
+      
+        $data = [
+            'job' => $job,
+            'customer' => $customer
+        ];
+    
+        $pdf = PDF::loadView('DeliveryCard', $data);
+    
+        return $pdf->download('Deliverycard.pdf');
     }
     
     

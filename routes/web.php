@@ -19,7 +19,3 @@ Route::get('/', function () {
 Route::get('/jobcard',function () {
     return view('jobcard');
 });
-
-Route::get('/jobcard',function () {
-    return view('jobcard');
-});

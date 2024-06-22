@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from '../api/axios';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoadingBar from 'react-top-loading-bar';
 
 const InputField = ({max, label, value, onChange, type = "text", id, placeholder, pattern, errorMessage }) => (
   <div className="mb-6">
@@ -41,7 +43,7 @@ const InputField = ({max, label, value, onChange, type = "text", id, placeholder
 );
 
 const CustomerEntry = () => {
-
+  const loadingBarRef = useRef(null);
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [phnnumber, setphnnumber] = useState("");
@@ -59,15 +61,14 @@ const CustomerEntry = () => {
     setwhatsapp(phnnumber);
   }, [phnnumber]);
 
-
-  
-
   const validateForm = () => {
     const newErrors = {};
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!firstname) newErrors.firstname = "First name is required";
     if (!lastname) newErrors.lastname = "Last name is required";
     if (!phnnumber) newErrors.phnnumber = "Phone number is required";
     if (!email) newErrors.email = "Email is required";
+    else if (!emailPattern.test(email)) newErrors.email = "Invalid email format";
     if (!streetAdress) newErrors.streetAdress = "Street address is required";
     if (!city) newErrors.city = "City is required";
     if (!state) newErrors.state = "State is required";
@@ -77,10 +78,13 @@ const CustomerEntry = () => {
   };
 
   const handleSubmit = async (event) => {
+    loadingBarRef.current.continuousStart();
     event.preventDefault();
+    
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      loadingBarRef.current.complete();
       return;
     }
     setErrors({});
@@ -95,31 +99,24 @@ const CustomerEntry = () => {
       state,
     };
 
-
-      try {
-        const response = await axios.post('customerentry', formData);
-        if (response.status === 201) {
-          toast.success('Form submitted successfully!');
-
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        toast.error("There is an error")
+    try {
+      const response = await axios.post('customerentry', formData);
+      if (response.status === 201) {
+        toast.success('Form submitted successfully!');
       }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error("There is an error");
+    } finally {
+      loadingBarRef.current.complete();
     }
-    
-    
-
-    
-
-
+  };
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-16">
+      <LoadingBar color="#f11946" ref={loadingBarRef} />
       <ToastContainer />
       <form onSubmit={handleSubmit}>
-      
-        
         <div className="grid gap-6 mb-3 lg:grid-cols-2">
           <InputField
             label="First name"
@@ -138,23 +135,24 @@ const CustomerEntry = () => {
             errorMessage={errors.lastname}
           />
           <InputField
-            maxLength={10}
+            max={10}
             label="Phone number"
             value={phnnumber}
             onChange={(e) => setphnnumber(e.target.value)}
             type="tel"
-            id="phnumber"
+            id="pnnumber"
             placeholder="123-45-678"
             pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
             errorMessage={errors.phnnumber}
           />
           <InputField
-            maxLength={10}          
+            max={10}
             label="WhatsApp Number"
             value={whatsapp}
             onChange={(e) => setwhatsapp(e.target.value)}
             type="tel"
             id="wanumber"
+            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
             placeholder="123-45-678"
             errorMessage={errors.whatsapp}
           />

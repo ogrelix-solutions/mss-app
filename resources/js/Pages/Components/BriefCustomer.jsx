@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from '../api/axios';
 import { toast } from 'react-toastify';
 import { toWords } from 'number-to-words';
-
+import LoadingBar from 'react-top-loading-bar';
 const BriefCustomer = ({ customer }) => {
   const [customerInfo, setCustomerInfo] = useState(customer);
   const [editingField, setEditingField] = useState(null);
+  const loadingBarRef = useRef(null);
 
   const fieldMap = {
     'Phone': 'pnumber',
@@ -29,6 +30,7 @@ const BriefCustomer = ({ customer }) => {
 
   const handleUpdateClick = async () => {
     if (!editingField) return;
+    loadingBarRef.current.continuousStart();
 
     const fieldKey = fieldMap[editingField];
     const fieldValue = customerInfo[fieldKey];
@@ -40,12 +42,14 @@ const BriefCustomer = ({ customer }) => {
         id: customer.cus_id,
       });
       if (response.status === 200) {
-        toast.success('Field updated successfully!');
+        null
       }
       setEditingField(null);
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Failed to update field.');
+
+    } finally{
+      loadingBarRef.current.complete();
     }
   };
 
@@ -54,6 +58,7 @@ const BriefCustomer = ({ customer }) => {
 
     return (
       <div key={field} className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <LoadingBar color="#f11946" ref={loadingBarRef} />
         <p className="text-gray-600 capitalize">{label}</p>
         <div className="flex items-center">
           {isEditing ? (

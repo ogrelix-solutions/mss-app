@@ -1,16 +1,15 @@
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from '../api/axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { toWords } from 'number-to-words';
-
+import LoadingBar from 'react-top-loading-bar';
 
 const BriefDescription = ({ job, customer }) => {
   const [jobInfo, setJobInfo] = useState(job);
   const [customerInfo, setCustomerInfo] = useState(customer);
   const [editingField, setEditingField] = useState(null);
-
-
+  const loadingBarRef = useRef(null);
 
 
   const fieldMap = {
@@ -29,7 +28,8 @@ const BriefDescription = ({ job, customer }) => {
     'Final Amount': 'final_amount',
     'Cash Mode': 'cash_mode',
     'Remarks': 'remarks',
-    'Cash Field': 'cash_field'
+    'Cash Field': 'cash_field',
+    'Job Status':'status'
   };
 
 
@@ -52,6 +52,7 @@ const BriefDescription = ({ job, customer }) => {
 
   const handleUpdateClick = async () => {
     if (!editingField) return;
+    loadingBarRef.current.continuousStart();
 
     const fieldKey = fieldMap[editingField] || editingField;
     const fieldValue = jobInfo.hasOwnProperty(fieldKey)
@@ -65,12 +66,14 @@ const BriefDescription = ({ job, customer }) => {
         id: jobInfo.cus_id,
       });
       if (response.status === 200) {
-        toast.success(fieldKey+' updated successfully!');
+        null
       }
       setEditingField(null);
     } catch (error) {
       console.error('Error:', error);
       toast.error('Failed to update field.');
+    } finally{
+      loadingBarRef.current.complete();
     }
   };
 
@@ -78,10 +81,13 @@ const BriefDescription = ({ job, customer }) => {
   
     const renderField = (section, label, field, value, alphanumeric) => {
       const isEditing = editingField === label;
-      const options = ['Upi', 'Cash on Delivery', 'net banking'];
+      const options = ['Upi', 'Cash on Delivery', 'Net Banking' , 'Free'];
+      const cash = ['Paid','Partial','Unpaid']
+      const job = ["Finished" , "Pending" ,"Partial"]
   
       return (
         <div key={field} className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+          <LoadingBar color="#f11946" ref={loadingBarRef} />
           <p className="text-gray-600 capitalize">{label}</p>
           <div className="flex items-center">
             {isEditing && (field === 'ddate' || field === 'gdate')? (
@@ -108,7 +114,41 @@ const BriefDescription = ({ job, customer }) => {
                   </label>
                 ))}
               </div>
-            ) : isEditing? (
+            ) : isEditing && field === 'cash_field'? (
+              <div>
+                {cash.map((option) => (
+                  <label key={option} className="flex items-center mr-4">
+                    <input
+                      type="radio"
+                      name={field}
+                      value={option}
+                      checked={value === option}
+                      onChange={(e) => handleInputChange(e, section, field)}
+                      className="form-radio"
+                    />
+                    <span className="ml-2">{option}</span>
+                  </label>
+                ))}
+              </div>
+            ): isEditing && field === 'status'? (
+              <div>
+                {job.map((option) => (
+                  <label key={option} className="flex items-center mr-4">
+                    <input
+                      type="radio"
+                      name={field}
+                      value={option}
+                      checked={value === option}
+                      onChange={(e) => handleInputChange(e, section, field)}
+                      className="form-radio"
+                    />
+                    <span className="ml-2">{option}</span>
+                  </label>
+                ))}
+              </div>
+            )
+            
+            : isEditing? (
               <input
                 type="text"
                 name={field}
@@ -157,23 +197,61 @@ const BriefDescription = ({ job, customer }) => {
     </div>
   );
   const handleDownload = () => {
-    axios.post('download-jobcard', { id:"1" }, {
+    if (!jobInfo || !customerInfo) {
+      console.error('Job information or customer information is missing.');
+      return;
+    }
+
+   
+    axios.post('download-jobcard', { id: jobInfo.cus_id }, {
         responseType: 'blob',
     }).then(response => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'jobcard.pdf');
+        link.setAttribute('download', `${customerInfo.cus_id}_${jobInfo.id}_jobcard.pdf`);
         document.body.appendChild(link);
         link.click();
-
-
         link.parentNode.removeChild(link);
     }).catch(error => {
         console.error('Error downloading PDF:', error);
     });
-};
+  };
 
+  const handleDownloadDelivery = () => {
+    if (!jobInfo || !customerInfo) {
+      console.error('Job information or customer information is missing.');
+      return;
+    }
+
+    if(!jobInfo.action_taken){
+      toast.error("Action Taken is Required to Generate Delivery Recipt")
+    }
+    if(!jobInfo.cash_mode){
+      toast.error("Cash Mode is Required to Generate Delivery Recipt")
+    }
+    if(!jobInfo.return_condition){
+      toast.error("Return Condition is Required to Generate Delivery Recipt")
+    }
+
+    if(jobInfo.action_taken && jobInfo.cash_mode && jobInfo.return_condition){
+    axios.post('download-delivery', { id: jobInfo.cus_id }, {
+        responseType: 'blob',
+    }).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${jobInfo.cus_id}_${jobInfo.id}_delivery.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+    }).catch(error => {
+        console.error('Error downloading PDF:', error);
+    });
+  };
+}
+
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
@@ -184,7 +262,7 @@ const BriefDescription = ({ job, customer }) => {
             <h2 className="text-2xl">Job Information</h2>
             <p className="text-sm text-gray-500">Personal details and application.</p>
           </div>
-          <div className="text-2xl text-gray-500">Job Status: Finished</div>
+          <div className="text-2xl text-gray-500">Job Status: {jobInfo.status}</div>
         </div>
 
         <div>
@@ -209,24 +287,9 @@ const BriefDescription = ({ job, customer }) => {
           {renderField('job', 'Amount Breakup', 'amount_breakup', jobInfo.amount_breakup)}
           {renderField('job', 'Final Amount', 'final_amount', jobInfo.final_amount, true)}
           {renderField('job', 'Cash Mode', 'cash_mode', jobInfo.cash_mode)}
+          {renderField('job', 'Cash Field', 'cash_field', jobInfo.cash_field)}
 
-          <div className="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-            <p className="text-gray-600">Cash Field</p>
-            <div className="flex items-center space-x-4">
-              {['Yes', 'No', 'Partial'].map((option) => (
-                <label key={option} className="flex items-center">
-                  <input
-                    type="radio"
-                    name="cash_field"
-                    value={option}
-                    checked={jobInfo.cash_field === option}
-                    className="form-radio"
-                    onChange={(e) => handleInputChange(e, 'job', 'cash_field')}
-                  />
-                  <span className="ml-2">{option}</span>
-                </label>
-              ))}
-            </div>
+            
           </div>
 
           {renderField('job', 'Remarks', 'remarks', jobInfo.remarks)}
@@ -250,11 +313,14 @@ const BriefDescription = ({ job, customer }) => {
                   </svg>
                   <span>Delivery.pdf</span>
                 </div>
-                <a href="#" className="text-indigo-600 hover:underline">Download</a>
+                <a onClick={(e)=>handleDownloadDelivery()} className="text-indigo-600 hover:underline">Download</a>
               </div>
             </div>
           </div>
-        </div>
+          {renderField('job', 'Job Status', 'status', jobInfo.status)}
+
+        
+        
       </div>
     </div>
   );

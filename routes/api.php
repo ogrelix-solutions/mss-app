@@ -16,4 +16,7 @@ Route::post('/customerget',function () {
 }
 );
 
+Route::post('/updatecustomer',[CustomerController::class,'Update_Customer']);
+
 Route::post('/download-jobcard', [JobController::class, 'downloadJobCard']);
+Route::post('/download-delivery', [JobController::class, 'downloadDelivery']);
