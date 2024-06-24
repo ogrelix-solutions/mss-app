@@ -161,7 +161,7 @@ const BriefDescription = ({ job, customer }) => {
                 <span className="flex-grow">{value}</span>
               ) : alphanumeric? (
                 <span className="flex-grow">
-                  {value} Rs. <span className='text-sm'>{alphanumeric && toWords(value).toUpperCase()}</span>
+                  Rs. <span className='text-sm'>{value}</span>
                 </span>
               ) : (
                 <span className="flex-grow">{value}</span>

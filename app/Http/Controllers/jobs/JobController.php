@@ -85,13 +85,9 @@ class JobController extends Controller
         if ($job) {
             // Update the job with the provided key and value
            
-            $job->$validatedData['key'] = $validatedData['value'];
+            $job->{$validatedData['key']} = $validatedData['value'];
              
-                // Add cases for other fields if needed
-                // case 'other_field':
-                //     $job->other_field = $validatedData['value'];
-                //     break;
-
+      
              $job->save(); 
             return response()->json([
                 'success' => true,

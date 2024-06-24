@@ -28,12 +28,12 @@ return new class extends Migration
             $table->text('action_taken')->nullable(); //actiontaken
             $table->text('return_condition')->nullable(); //return condition
             $table->date('delivery')->nullable(); //delivery date
-            $table->integer('rough_estimate')->nullable()->default(0);
+            $table->text('rough_estimate')->nullable();
             $table->text('amount_breakup')->nullable();
-            $table->integer('final_amount')->nullable()->default(0);
+            $table->text('final_amount')->nullable();
             $table->string('cash_mode')->nullable();
             $table->string('cash_field')->default('Unpaid');
-            $table->integer('remarks_mss')->nullable();
+            $table->string('remarks_mss')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
         });
