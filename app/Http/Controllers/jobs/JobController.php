@@ -70,37 +70,48 @@ class JobController extends Controller
         return response()->json($data);
     }
 
-    public function Update_Jobs(Request $request) {
-        
-    
+    public function Update_Jobs(Request $request)
+    {
+        // Validate incoming request data
         $validatedData = $request->validate([
             'id' => 'required|string',
             'key' => 'required|string',
             'value' => 'required'
         ]);
     
-
+        // Find the job by cus_id
         $job = Jobs::where('cus_id', $validatedData['id'])->first();
     
-
         if ($job) {
-    
-            $job->update([$validatedData['key'] => $validatedData['value']]);
-            
+            // Update the job with the provided key and value
+           
+            $job->$validatedData['key'] = $validatedData['value'];
+             
+                // Add cases for other fields if needed
+                // case 'other_field':
+                //     $job->other_field = $validatedData['value'];
+                //     break;
 
+             $job->save(); 
             return response()->json([
                 'success' => true,
                 'message' => 'Job updated successfully',
                 'data' => $job
             ], 200);
-        } else {
-
+            }
+    
+            // Save the updated job
+            
+    
+        else {
+            // Handle case where job with provided cus_id is not found
             return response()->json([
                 'success' => false,
                 'message' => 'Job not found'
             ], 404);
         }
     }
+    
 
     public function downloadJobCard(Request $request)
     {

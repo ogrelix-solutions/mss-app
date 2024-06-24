@@ -158,7 +158,7 @@ const JobsTable = () => {
                           <p className="text-gray-900 whitespace-no-wrap">{customer.pnumber}</p>
                         </td>
                         <td className="px-5 py-5 border-b border-gray-200 text-sm">{job.type}</td>
-                        <td className="px-5 py-5 border-b border-gray-200 text-sm">{job.jobstatus || '-'}</td>
+                        <td className="px-5 py-5 border-b border-gray-200 text-sm">{job.status || '-'}</td>
                       </tr>
                     ))}
                   </tbody>
